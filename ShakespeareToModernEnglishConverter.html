@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shakespeare to Modern English Converter</title>
+    <style>
+      body {
+        font-family: Times New Roman, sans-serif;
+        background-color: lightblue;
+        text-align: center;
+      }
+      h1 {
+        margin-top: 20px;
+      }
+      label {
+        display: block;
+        margin-top: 1em;
+      }
+      input[type="radio"] {
+        margin-right: 0.5em;
+      }
+      button {
+        margin-top: 1em;
+      }
+	#logo {
+        display: block;
+        margin: 0 auto;
+        margin-top: 50px;
+        max-width: 50%;
+        border-radius: 50%; /* This makes the logo circular */
+        box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.5); /* This creates the fade effect */
+      }
+    </style>
+  </head>
+  <body>
+    <a href="https://www.iempublicschool.com/"><img src="https://i.ibb.co/CVxxTP8/iem-public-school-kolkata-logo-1474858364.jpg" alt="logo" id="logo"></a>
+    <h1>Shakespeare to Modern English Converter</h1>
+    <form>
+      <label>
+        <input type="radio" name="mode" value="s2m" checked />
+        Convert from Shakespearean English to Modern English
+      </label>
+      <label>
+        <input type="radio" name="mode" value="m2s" />
+        Convert from Modern English to Shakespearean English
+      </label>
+      <label>
+        Input Text:
+        <textarea name="input" rows="10"></textarea>
+      </label>
+      <button type="submit">Convert</button>
+    </form>
+    <div id="output"></div>
+    <script>
+      // Define the word lists for the conversions
+      const shakespeareWords = [
+              "'tis",
+        "'twas",
+        "'s",
+        "'em",
+        "doth",
+        "hath",
+        "art",
+        "thou",
+        "thy",
+        "thee",
+        "ye",
+        "em",
+        "ere",
+        "est",
+        "quoth",
+        "yonder",
+        "certes",
+        "will't",
+        "th'",
+        "yea",
+        "did'st",
+        "o'",
+        "take't",
+        "liv'st",
+        "dost",
+	  "ev'n"
+      ];
+      const modernWords = [
+        "it is",
+        "it was",
+        "'s",
+        "'em",
+        "does",
+        "has",
+        "are",
+        "you",
+        "your",
+        "you",
+        "you",
+        "them",
+        "before",
+        "here",
+        "says",
+        "over there",
+        "certainly",
+        "will it",
+        "the",
+        "yes",
+        "did you",
+        "of",
+        "take it",
+        "live",
+        "does",
+	  "even"
+      ];
+
+      // Get references to the form elements
+      const form = document.querySelector("form");
+      const modeRadios = document.querySelectorAll('input[type="radio"]');
+      const inputTextarea = document.querySelector('textarea[name="input"]');
+      const outputDiv = document.querySelector("#output");
+
+function shakespeareToModern(input) {
+  let output = input;
+  for (let i = 0; i < shakespeareWords.length; i++) {
+    const regex = new RegExp(`\\b${shakespeareWords[i]}\\b`, "gi");
+    output = output.replace(regex, modernWords[i]);
+  }
+  return output;
+}
+
+
+      function modernToShakespeare(input) {
+        let output = input;
+        for (let i = 0; i < modernWords.length; i++) {
+          const regex = new RegExp(`\\b${modernWords[i]}\\b`, "gi");
+          output = output.replace(regex, shakespeareWords[i]);
+        }
+        return output;
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const input = inputTextarea.value;
+        const mode = modeRadios[0].checked ? "s2m" : "m2s";
+        let output;
+        if (mode === "s2m") {
+          output = shakespeareToModern(input);
+        } else {
+          output = modernToShakespeare(input);
+        }
+        outputDiv.textContent = output;
+      });
+    </script>
+  </body>
+</html>
